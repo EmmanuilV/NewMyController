@@ -37,13 +37,11 @@ namespace TodoItems
             }
             else
             {
-                //todoListId++;
                 todoLists.Add(id, new List<TodoItem>());
                 todoId = 0;
                 item.Id = ++todoId;
                 todoLists[id].Add(item);
             }
-            //todoListId++;
             return item;
         }
         public Dictionary<int, List<TodoItem>> GetAllLists()
@@ -52,6 +50,4 @@ namespace TodoItems
         }
 
     }
-
-
 }
