@@ -11,4 +11,3 @@ namespace TodoItems
 
     }
 }
-//http 127.0.0.1:5000/api/todolist/create title='new title'

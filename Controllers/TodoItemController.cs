@@ -56,11 +56,7 @@ namespace TodoItems.Controllers
         [HttpPost("createlist")]
         public void CreateTodoList(TodoList todoList)
         {
-
             todoListService.AddTodoList(todoList);
-
-            //return Created($"api/todolist/create/{createdItem.Id}", createdItem);
-            //return todoListService.AddTodoItem(todoItem);
         }
 
 

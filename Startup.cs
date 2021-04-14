@@ -25,7 +25,6 @@ namespace TodoItems
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 
@@ -35,7 +34,6 @@ namespace TodoItems
                 .UseSnakeCaseNamingConvention()
                 );
 
-            //services.AddScoped<TodoItemService>()
             services.AddScoped<TodoListService>();
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
@@ -46,7 +44,6 @@ namespace TodoItems
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
