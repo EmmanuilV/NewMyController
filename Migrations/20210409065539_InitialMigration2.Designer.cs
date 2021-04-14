@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TodoItems.Models;
@@ -9,9 +10,10 @@ using TodoItems.Models;
 namespace MyController.Migrations
 {
     [DbContext(typeof(TodoListContext))]
-    partial class TodoListContextModelSnapshot : ModelSnapshot
+    [Migration("20210409065539_InitialMigration2")]
+    partial class InitialMigration2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,14 +78,12 @@ namespace MyController.Migrations
 
             modelBuilder.Entity("TodoItems.TodoItem", b =>
                 {
-                    b.HasOne("TodoItems.TodoList", "TodoList")
+                    b.HasOne("TodoItems.TodoList", null)
                         .WithMany("TodoItems")
                         .HasForeignKey("TodoListId")
                         .HasConstraintName("fk_todo_items_todo_lists_todo_list_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("TodoList");
                 });
 
             modelBuilder.Entity("TodoItems.TodoList", b =>
