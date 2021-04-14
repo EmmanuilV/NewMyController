@@ -23,21 +23,21 @@ namespace TodoItems.Controllers
         }
 
         [HttpGet("getall")]
-        public ActionResult<List<TodoItem>> GetTodoItems(int listId)
+        public List<TodoItem> GetTodoItems(int listId)
         {
-            return Ok(todoListService.GetAllTodoItems(listId));
+            return todoListService.GetAllTodoItems(listId);
         }
 
         [HttpGet("dashboard")]
-        public ActionResult<List<TodoItem>> GetTodoItemsForToday()
+        public PlannedDTO GetTodoItemsForToday()
         {
-            return Ok(todoListService.GetTodayTasks());
+            return todoListService.GetTodayTasks();
         }
 
         [HttpGet("collection/today")]
-        public ActionResult<TodoItem> GetTodoItemById()
+        public List<NotDoneDTO> GetTodoItemById()
         {
-            return Ok(todoListService.GetTaskDTO());
+            return todoListService.GetTaskDTO();
         }
 
         [HttpGet]
@@ -61,15 +61,15 @@ namespace TodoItems.Controllers
 
 
         [HttpPut("update/{itemId}")]
-        public IActionResult PutTodoItem(int listId, int itemId, TodoItem model)
+        public TodoItem PutTodoItem(int listId, int itemId, TodoItem model)
         {
-            return Ok(todoListService.UpdateTodoItem(listId, itemId, model));
+            return todoListService.UpdateTodoItem(listId, itemId, model);
         }
 
         [HttpDelete("delete/{id}")]
-        public ActionResult<TodoItem> DeleteTodoItemById(int listId, int itemId)
+        public TodoItem DeleteTodoItemById(int listId, int itemId)
         {
-            return Ok(todoListService.DeleteTodoItem(listId, itemId));
+            return todoListService.DeleteTodoItem(listId, itemId);
         }
     }
 

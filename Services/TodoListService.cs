@@ -87,7 +87,7 @@ namespace TodoItems
             todoItemDTO.TodoItem = todoItem;
             return todoItemDTO;
         }
-        public object GetTaskDTO()
+        public List<NotDoneDTO> GetTaskDTO()
         {
             return db.TodoItems
             .Where(b => b.DueDate.Value.Date == DateTime.Today)
