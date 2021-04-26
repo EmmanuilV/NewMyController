@@ -15,5 +15,4 @@ namespace TodoItems.Models
 
     }
 }
-    //dotnet ef migrations add InitialMigration
 

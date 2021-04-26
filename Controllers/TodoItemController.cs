@@ -54,9 +54,9 @@ namespace TodoItems.Controllers
         }
 
         [HttpPost("createlist")]
-        public void CreateTodoList(TodoList todoList)
+        public TodoList CreateTodoList(TodoList todoList)
         {
-            todoListService.AddTodoList(todoList);
+           return todoListService.AddTodoList(todoList);
         }
 
 
@@ -66,7 +66,7 @@ namespace TodoItems.Controllers
             return todoListService.UpdateTodoItem(listId, itemId, model);
         }
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("delete/{itemId}")]
         public TodoItem DeleteTodoItemById(int listId, int itemId)
         {
             return todoListService.DeleteTodoItem(listId, itemId);

@@ -79,7 +79,7 @@ namespace TodoItems
             };
             return result;
         }
-        private NotDoneDTO TodayTaskDTO(TodoItem todoItem)
+        private NotDoneDTO TodayNotDoneDTO(TodoItem todoItem)
         {
             NotDoneDTO todoItemDTO = new NotDoneDTO();
             todoItemDTO.ListTitle = todoItem.TodoList.Title;
@@ -92,7 +92,7 @@ namespace TodoItems
             return db.TodoItems
             .Where(b => b.DueDate.Value.Date == DateTime.Today)
             .Include(b => b.TodoList)
-            .Select(TodayTaskDTO)
+            .Select(TodayNotDoneDTO)
             .ToList();
         }
         public List<TodoItem> GetAllTask(bool allStatus)
