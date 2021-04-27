@@ -37,6 +37,13 @@ namespace TodoItems
             TodoItems = db.TodoItems.Where(b => b.TodoListId == listId).ToList();
             return TodoItems;
         }
+
+        public TodoItem GetTask(int listId, int itemId)
+        {
+            TodoItem TodoItem = new TodoItem();
+            TodoItem = db.TodoItems.Where(b => b.TodoItemId == itemId);
+            return TodoItem;
+        }
         public TodoItem UpdateTodoItem(int listId, int itemId, TodoItem todoItem)
         {
             todoItem.TodoListId = listId;

@@ -22,8 +22,14 @@ namespace TodoItems.Controllers
             this.todoListService = service1;
         }
 
-        [HttpGet("getall")]
+        [HttpGet("all")]
         public List<TodoItem> GetTodoItems(int listId)
+        {
+            return todoListService.GetAllTodoItems(listId);
+        }
+
+        [HttpGet("{itemId}")]
+        public List<TodoItem> GetTask(int listId, int itemId)
         {
             return todoListService.GetAllTodoItems(listId);
         }
@@ -46,14 +52,13 @@ namespace TodoItems.Controllers
             return todoListService.GetAllTask(allStatus);
         }
 
-        [HttpPost("createitem")]
-        public void CreateTodoItem(int listId, TodoItem todoItem)
+        [HttpPost("item/create")]
+        public TodoItem CreateTodoItem(int listId, TodoItem todoItem)
         {
-
-            todoListService.AddTodoItem(listId, todoItem);
+            return todoListService.AddTodoItem(listId, todoItem);
         }
 
-        [HttpPost("createlist")]
+        [HttpPost("list/create")]
         public TodoList CreateTodoList(TodoList todoList)
         {
            return todoListService.AddTodoList(todoList);
@@ -72,6 +77,4 @@ namespace TodoItems.Controllers
             return todoListService.DeleteTodoItem(listId, itemId);
         }
     }
-
-
 }

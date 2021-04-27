@@ -9,8 +9,6 @@ namespace TodoItems.Models
         public DbSet<TodoItem> TodoItems { get; set; }
         public DbSet<TodoList> TodoLists { get; set; }
 
-
-
         public TodoListContext(DbContextOptions<TodoListContext> options) : base(options) { }
 
     }

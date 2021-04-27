@@ -25,6 +25,9 @@ namespace TodoItems
 
         public IConfiguration Configuration { get; }
 
+
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public void ConfigureServices(IServiceCollection services)
         {
 
@@ -41,6 +44,16 @@ namespace TodoItems
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "webapi", Version = "v1" });
+            });
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.WithOrigins("http://127.0.0.1:5000", "http://127.0.0.1:5500");
+                    builder.AllowAnyHeader();
+                    builder.AllowAnyMethod();
+                });
             });
         }
 
@@ -60,12 +73,17 @@ namespace TodoItems
 
             app.UseRouting();
 
+            app.UseCors(MyAllowSpecificOrigins);
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+            
+
+
         }
     }
 }
