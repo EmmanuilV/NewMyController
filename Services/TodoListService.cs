@@ -3,6 +3,7 @@ using TodoItems.Models;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace TodoItems
 {
@@ -25,8 +26,13 @@ namespace TodoItems
         public TodoItem DeleteTodoItem(int listId, int itemId)
         {
             var todoItem = db.TodoItems
-            .Where(b => b.TodoListId == listId && b.TodoItemId == itemId)
-            .Single();
+                .Where(b => b.TodoListId == listId && b.TodoItemId == itemId)
+                .FirstOrDefault();
+            if (todoItem == null)
+            {
+                return null;
+            }
+            //.Single();
             db.TodoItems.Remove(todoItem);
             db.SaveChanges();
             return todoItem;
@@ -38,11 +44,30 @@ namespace TodoItems
             return TodoItems;
         }
 
+        // public TodoItem ChangeStatustodoItem(int listId, int itemId, string done)
+        // {
+        //     TodoItem TodoItem = new TodoItem();
+        //     TodoItem = db.TodoItems.Where(b => b.TodoListId == listId && b.TodoItemId == itemId).Single();
+        //     TodoItem.Done = bool.Parse(done);
+        //     db.TodoItems.Update(TodoItem);
+        //     db.SaveChanges();
+        //     return TodoItem;
+        // }
+
+        public TodoItem ChangeTodoItemStatus(int listId, int itemId, JsonPatchDocument<TodoItem> model)
+        {
+            TodoItem todoItem = new TodoItem();
+            todoItem = db.TodoItems.Where(b => b.TodoListId == listId && b.TodoItemId == itemId).Single();
+            model.ApplyTo(todoItem);
+            db.TodoItems.Update(todoItem);
+            db.SaveChanges();
+            return todoItem;
+        }
         public TodoItem GetTask(int listId, int itemId)
         {
-            TodoItem TodoItem = new TodoItem();
-            TodoItem = db.TodoItems.Where(b => b.TodoItemId == itemId);
-            return TodoItem;
+            TodoItem todoItem = new TodoItem();
+            todoItem = db.TodoItems.Where(b => b.TodoListId == listId && b.TodoItemId == itemId).Single();
+            return todoItem;
         }
         public TodoItem UpdateTodoItem(int listId, int itemId, TodoItem todoItem)
         {
@@ -104,7 +129,7 @@ namespace TodoItems
         }
         public List<TodoItem> GetAllTask(bool allStatus)
         {
-            if(allStatus)
+            if (allStatus)
             {
                 return db.TodoItems.Where(b => b.Done == false).ToList();
             }
@@ -113,6 +138,6 @@ namespace TodoItems
                 return db.TodoItems.ToList();
             }
         }
-        
+
     }
 }
