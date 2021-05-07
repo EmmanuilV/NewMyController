@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace TodoItems.Controllers
 {
 
-    [Route("api/todolists/{listId}/tasks")]
+    [Route("api/tasks")]
     [ApiController]
     public class TodoItemController : ControllerBase
     {
@@ -22,14 +22,20 @@ namespace TodoItems.Controllers
             this.todoListService = service1;
         }
 
-        [HttpGet("all")]
+        [HttpGet("lists")]
+        public List<TodoList> GetTodoLists()
+        {
+            return todoListService.GetAllTodoLists();
+        }
+
+        [HttpGet("{listId}/all")]
         public List<TodoItem> GetTodoItems(int listId)
         {
             return todoListService.GetAllTodoItems(listId);
         }
 
 
-        [HttpGet("todoItem/task/{itemId}")]
+        [HttpGet("{listId}/todoItem/task/{itemId}")]
         public TodoItem GetTask(int listId, int itemId)
         {
             return todoListService.GetTask(listId, itemId);
@@ -49,10 +55,10 @@ namespace TodoItems.Controllers
         [HttpGet]
         public ActionResult<List<TodoItem>> GetAllTasks(bool allStatus)
         {
-            return todoListService.GetAllTask(allStatus);
+            return todoListService.GetAllTasks(allStatus);
         }
 
-        [HttpPost("item")]
+        [HttpPost("{listId}/item")]
         public TodoItem CreateTodoItem(int listId, TodoItem todoItem)
         {
             return todoListService.AddTodoItem(listId, todoItem);
@@ -65,19 +71,19 @@ namespace TodoItems.Controllers
         }
 
 
-        [HttpPut("task/{itemId}")]
+        [HttpPut("{listId}/task/{itemId}")]
         public TodoItem PutTodoItem(int listId, int itemId, TodoItem model)
         {
             return todoListService.UpdateTodoItem(listId, itemId, model);
         }
 
-        [HttpPatch("todoItem/{itemId}")]
+        [HttpPatch("{listId}/todoItem/{itemId}")]
         public TodoItem ChangeTodoItemStatus(int listId, int itemId, [FromBody]JsonPatchDocument<TodoItem> model)
         {
             return todoListService.ChangeTodoItemStatus(listId, itemId, model);
         }
 
-        [HttpDelete("{itemId}")]
+        [HttpDelete("{listId}/{itemId}")]
         public ActionResult<TodoItem> DeleteTodoItemById(int listId, int itemId)
         {
             TodoItem todoItem = todoListService.DeleteTodoItem(listId, itemId);

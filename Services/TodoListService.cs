@@ -44,6 +44,15 @@ namespace TodoItems
             return TodoItems;
         }
 
+        public List<TodoList> GetAllTodoLists()
+        {
+            
+            List<TodoList> todoList = new List<TodoList>();
+            todoList = db.TodoLists.ToList();
+
+            return todoList;
+        }
+
         // public TodoItem ChangeStatustodoItem(int listId, int itemId, string done)
         // {
         //     TodoItem TodoItem = new TodoItem();
@@ -90,6 +99,7 @@ namespace TodoItems
             using (var command = db.Database.GetDbConnection().CreateCommand())
             {
                 command.CommandText = "select l.todo_list_id, l.title, Count(i.done) from todo_items i right join todo_lists l on l.todo_list_id=i.todo_list_id  where i.done=false group by l.todo_list_id, l.title";
+                                    
                 db.Database.OpenConnection();
                 using (var reader = command.ExecuteReader())
                 {
@@ -99,7 +109,8 @@ namespace TodoItems
                         {
                             TodoListId = reader.GetInt32(0),
                             ListTitle = reader.IsDBNull(1) ? null : reader.GetString(1),
-                            CountItems = reader.GetInt32(2)
+                            CountItems = reader.GetInt32(2),
+                            // TodoItem = db.TodoItems.Where(t => t.TodoListId == reader.GetInt32(0)
                         });
                     }
                 }
@@ -127,7 +138,7 @@ namespace TodoItems
             .Select(TodayNotDoneDTO)
             .ToList();
         }
-        public List<TodoItem> GetAllTask(bool allStatus)
+        public List<TodoItem> GetAllTasks(bool allStatus)
         {
             if (allStatus)
             {
