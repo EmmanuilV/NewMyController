@@ -53,16 +53,6 @@ namespace TodoItems
             return todoList;
         }
 
-        // public TodoItem ChangeStatustodoItem(int listId, int itemId, string done)
-        // {
-        //     TodoItem TodoItem = new TodoItem();
-        //     TodoItem = db.TodoItems.Where(b => b.TodoListId == listId && b.TodoItemId == itemId).Single();
-        //     TodoItem.Done = bool.Parse(done);
-        //     db.TodoItems.Update(TodoItem);
-        //     db.SaveChanges();
-        //     return TodoItem;
-        // }
-
         public TodoItem ChangeTodoItemStatus(int listId, int itemId, JsonPatchDocument<TodoItem> model)
         {
             TodoItem todoItem = new TodoItem();
@@ -126,7 +116,7 @@ namespace TodoItems
         {
             NotDoneDTO todoItemDTO = new NotDoneDTO();
             todoItemDTO.ListTitle = todoItem.TodoList.Title;
-            todoItem.TodoList = null;
+            todoItemDTO.TodoListId = todoItem.TodoList.TodoListId;
             todoItemDTO.TodoItem = todoItem;
             return todoItemDTO;
         }
